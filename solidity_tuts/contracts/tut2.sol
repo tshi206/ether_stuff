@@ -1,0 +1,77 @@
+pragma solidity ^0.4.24;
+
+interface Regulator {
+    function checkValue(uint amount) external returns (bool);
+    function loan() external  returns (bool);
+}
+
+contract Bank is Regulator {
+    
+    // internal => protected
+    uint internal someInt;
+    
+    uint private value;
+    
+    constructor(uint amount) public {
+        value = amount;
+    }
+    
+    function deposit(uint amount) public {
+        value += amount;
+    }
+    
+    function withdraw(uint amount) public {
+        if (checkValue(amount)) {
+            value -= amount;
+        }
+    }
+    
+    function balance() public view returns (uint)  {
+        return value;
+    }
+    
+    // this is effectively an abstract method, there is no dedicated keyword for 'abstract' in solidity
+    function givemeabool() public returns(bool);
+    
+    function checkValue(uint amount) public returns (bool){
+        return amount <= value;
+    }
+    
+    function loan() public returns (bool) {
+        return value > 0;
+    }
+    
+}
+
+// inheritance can also combine with parent initialization
+contract MyFirstContract is Bank(10) {
+    
+    // in Solidity modifiers come after type declaration
+    string private name;
+    uint private age;
+    
+    function setName(string newName) public  {
+        someInt = 1;
+        name = newName;
+    }
+    
+    // public means public, view means readonly, pure means stateless
+    // public pure means public stateless
+    function getName() public view returns (string) {
+        return name;
+    }
+    
+    function setAge(uint newAge) public {
+        age = newAge;
+    }
+    
+    // returns in signature denotes return-type
+    function getAge() public view returns (uint) {
+        return age;
+    }
+    
+    function givemeabool() public returns(bool) {
+        return true;
+    }
+    
+}
