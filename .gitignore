@@ -30,3 +30,9 @@ build/**
 
 **/truffle.js
 **/truffle-config.js
+
+**/chaindata/**
+**/chaindata
+
+**/genesis.json
+
