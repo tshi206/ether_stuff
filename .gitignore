@@ -27,3 +27,6 @@ build/
 **/build
 build/**
 **/build/**
+
+**/truffle.js
+**/truffle-config.js
