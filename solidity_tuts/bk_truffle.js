@@ -15,12 +15,7 @@
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
-    networks: {
-        // Here we specified environment, called development and running on 127.0.0.1:6666. We’ll use it for deploying our contracts to the local Ethereum network.
-        development: {
-            host: "127.0.0.1",
-            port: 6666,
-            network_id: "*" // Match any network id
-        }
-    }
 };
+
+/* TODO: THIS FILE (NAMELY, 'truffle.js' BEFORE I RENAMED IT) SHOULD BE DELETED FOR WIN OS, USE 'truffle-config.js' INSTEAD!!!!!!!! IF U WANT TO KEEP THIS ANYWAY, RENAME IT AS I DID. FOR OTHER OS, IT DOES NOT MATTER.
+   */

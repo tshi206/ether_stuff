@@ -16,3 +16,6 @@ module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
 };
+
+/* TODO: THIS FILE (NAMELY, 'truffle.js' BEFORE I RENAMED IT) SHOULD BE DELETED FOR WIN OS, USE 'truffle-config.js' INSTEAD!!!!!!!! IF U WANT TO KEEP THIS ANYWAY, RENAME IT AS I DID. FOR OTHER OS, IT DOES NOT MATTER.
+   */
