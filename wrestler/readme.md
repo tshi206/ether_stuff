@@ -30,3 +30,5 @@ https://github.com/ethereum/go-ethereum/issues/14831
 https://stackoverflow.com/questions/46639741/geth-sendtransaction-error-insufficient-funds-for-gas-price-value
 - Truffle deployment on test network says: Error: exceeds block gas limit
 https://ethereum.stackexchange.com/questions/21262/truffle-deployment-on-test-network-says-error-exceeds-block-gas-limit
+- truffle-hdwallet-provider: Package is unable to find ethereumjs-wallet\hdkey
+https://github.com/trufflesuite/truffle-hdwallet-provider/issues/54
