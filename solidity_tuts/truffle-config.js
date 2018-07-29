@@ -19,7 +19,7 @@ module.exports = {
         // Here we specified environment, called development and running on 127.0.0.1:6666. We’ll use it for deploying our contracts to the local Ethereum network.
         development: {
             host: "127.0.0.1",
-            port: 6666,
+            port: 7545,
             network_id: "*" // Match any network id
         }
     }
