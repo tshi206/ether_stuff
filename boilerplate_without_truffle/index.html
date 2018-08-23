@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!--suppress JSUnresolvedVariable, JSValidateTypes, JSUnresolvedFunction -->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Candidates</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container" style="width: 650px;">
+    <div class="row">
+        <div class="col-lg-12 text-center" >
+            <h1 >Candidates</h1>
+            <hr/>
+            <br/>
+            <div id="content">
+                <h4 id="candidateName"></h4>
+                <hr/>
+                <form role="form">
+                    <div class="form-group" style="display:inline;">
+                        <div class="input-group">
+                            <input class="form-control input-lg" name="candidateName" title="candidateName" required>
+                            <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary btn-lg">Add Candidate</button>
+                  </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script>
+    // Initialize Web3
+    if (typeof web3 !== 'undefined') {
+        // if there is an existing provider in the browser, typically metamask, we initialize web3 using the existing blockchain provider
+        web3 = new Web3(web3.currentProvider);
+    } else {
+        web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545')); // default url and port for ganache instance
+    }
+    // Set Account
+    web3.eth.defaultAccount = web3.eth.accounts[0];
+    // Set Contract Abi
+    // obtain after deploying to a network, in this case, it is deployed beforehand on the ganache instance, via Remix IDE
+    let contractAbi = [
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_name",
+                    "type": "string"
+                }
+            ],
+            "name": "setCandidate",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "candidateName",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ]; //TODO: Add Your Contract ABI here!!!
+    // Set Contract Address
+    // again, this address is obtained from the pre-deployed contract in ganache, via Remix IDE
+    let contractAddress = '0xb2c7de77a3dba4107f528884b5efa076945dbcad'; //TODO: Add Your Contract address here!!!
+    // Set the Contract
+    // abi: application binary interface, a JSON object representing a smart contract which the ethereum virtual machine can understand
+    let contract = web3.eth.contract(contractAbi).at(contractAddress);
+    // Display Candidate Name
+    contract.candidateName(function(err, candidateName) {
+        $('#candidateName').html(candidateName);
+    });
+    // Change the Candidate Name
+    $('form').on('submit', function(event) {
+        // since we use metamask for sending transactions, we have to use async version of web3 calls.
+        event.preventDefault();
+
+        // use async call instead of synchronous call.
+        // see: https://github.com/MetaMask/faq/blob/master/DEVELOPERS.md#dizzy-all-async---think-of-metamask-as-a-light-client
+        // also see: https://github.com/ethereum/wiki/wiki/JavaScript-API#using-callbacks
+        contract.setCandidate($('input').val(), (error, result) => {
+            if (!error) {
+                alert(JSON.stringify(result));
+                // too lazy to do DOM manipulation, just reload the page
+                window.location.reload(true);
+// If we needed to pull the document from
+//  the web-server again (such as where the document contents
+//  change dynamically) we would pass the argument as 'true'.
+            } else {
+                console.error(error)
+            }
+        });
+    })
+</script>
+</body>
+</html>
